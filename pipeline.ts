@@ -39,7 +39,9 @@ const mergeToRecord = (record, args, data) => {
 
 const map = (record, args, data) => {
   if (record instanceof Array) {
-    return record.map(o => pick(o, args));
+    return record.map(o => {
+      return o[args[0]];
+    });
   } else {
     return pick(record, args);
   }
@@ -47,19 +49,72 @@ const map = (record, args, data) => {
 
 const value = (record, args, data) => {
   if (record instanceof Array) {
-    return record.map(o => o[args[0]]);
+    return record.map(obj => {
+      if (args.length > 0) {
+        obj = pick(obj, args);
+      }
+      return Object.keys(obj).map(key => obj[key]);
+    });
   } else {
-    return record[args[0]];
+    let ret = Object.keys(record).map(key => record[key]);
+    if (args.length > 0) {
+      return pickData(ret, args);
+    }
+    return ret;
   }
 };
 
 const nth = (record, args, data) => {
   if (record instanceof Array) {
-    let array = [];
+    let array = null;
     args.forEach(i => {
-      array = array.concat(record[i]);
+      if (array == null) {
+        array = record[i];
+      } else {
+        if (array instanceof Array) {
+          array = array.concat(record[i]);
+        } else {
+          array = [array].concat(record[i]);
+        }
+      }
     });
     return array;
+  }
+  return record;
+};
+const first = (record, args, data) => {
+  if (record instanceof Array) {
+    if (args.length > 0) {
+    } else {
+      args = [0];
+    }
+    return nth(record, args, data);
+  }
+  return record;
+};
+const last = (record, args, data) => {
+  if (record instanceof Array) {
+    if (args.length > 0) {
+      args.forEach(e => {
+        e = record.length - e;
+      });
+    } else {
+      args = [record.length - 1];
+    }
+    return nth(record, args, data);
+  }
+  return record;
+};
+
+const toObj = (ks, vs) =>
+  ks.reduce((o, k, i) => {
+    o[k] = vs[i];
+    return o;
+  }, {});
+
+const object = (record, args, data) => {
+  if (record instanceof Array) {
+    return toObj(args, record);
   }
   return record;
 };
@@ -73,7 +128,10 @@ const fpipe = {
   mergeToRecord: mergeToRecord,
   map: map,
   value: value,
-  nth: nth
+  nth: nth,
+  object: object,
+  last: last,
+  first: first
 };
 // const exp = 'pick:XM,GH';
 export const processPipe = (record, exp, data?) => {
@@ -87,6 +145,7 @@ export const processPipe = (record, exp, data?) => {
       args = ee[1].split(',');
     }
     if (fpipe[fname]) {
+      // console.log(fname, args);
       ret = fpipe[fname](ret, args, data);
     }
   });
