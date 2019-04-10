@@ -1,0 +1,11 @@
+{
+    "files": [
+        "pipelines.ts"
+    ],
+    "compilerOptions": {
+        "noImplicitAny": false,
+        "removeComments": true,
+        "target": "es2015",
+        "module": "commonjs"
+    }
+}
