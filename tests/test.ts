@@ -1,6 +1,6 @@
 import { multiData } from './data';
-import { processPipe } from '../pipeline';
-import { OObject } from '../object';
+import { processPipe } from '../src/pipeline';
+import { OObject } from '../src/object';
 
 //const exp = 'pick:XM,XB|map:XM';
 // const exp = 'omit:_values|pick:SFZJYXQ,XB,XM|object:first,second,third|value:XM,XB|map:XM,XB';
@@ -19,7 +19,8 @@ const data = { a: { c: 'ccccc' }, b: 'bbbbbbb', c: '{c.a}', ee: {a:'aaaaaaaa=>'}
 // |pick:a|test:b,c,d
 // const exp = '{"a":"{.}","b":"{.}"}';
 // const exp = '{"a":{a} }';
-const exp = '{"body":{"first":{a},"second":{b},"third":{.|pick:ee|string}}}';
+// const exp = '{"body":{"first":{a},"second":{b},"third":{.|pick:ee|string}}}';
 // const exp = '{.|string}';
+const exp = '{a}';
 const ret = OObject.Format(exp, data,true);
 console.log('>>>>>>>>>>>', ret, ' =>', typeof ret);
