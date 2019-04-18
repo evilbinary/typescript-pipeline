@@ -13,14 +13,21 @@ import { OObject } from '../src/object';
 // var arr = Object.keys(obj).map(key => obj[key]);
 // console.log(arr);
 // const data = [{ a: { c: 'oooo' } }, { b: 'bbbbbbb' }, { c: '{c.a}', d: 'ddd' },{ a: 'ccc' }];
-const data = { a: { c: 'ccccc' }, b: 'bbbbbbb', c: '{c.a}', ee: {a:'aaaaaaaa=>'} };
-
+// const data = {
+//   a: { c: 'ccccc' },
+//   b: 'bbbbbbb',
+//   c: '{c.a}',
+//   ee: { a: 'aaaaaaaa' }
+// };
+const data = JSON.parse(
+  '{"a":{"c":"ccccc"},"b":"bbbbbbb","c":"{c.a}","ee":{"a":"aaaaaaaa"}}'
+);
 // const exp='{a:{a}},b:{a}}';
 // |pick:a|test:b,c,d
 // const exp = '{"a":"{.}","b":"{.}"}';
 // const exp = '{"a":{a} }';
 // const exp = '{"body":{"first":{a},"second":{b},"third":{.|pick:ee|string}}}';
 // const exp = '{.|string}';
-const exp = '{a}';
-const ret = OObject.Format(exp, data,true);
+const exp = '{"test":{a}}';
+const ret = OObject.Format(exp, data, true);
 console.log('>>>>>>>>>>>', ret, ' =>', typeof ret);
