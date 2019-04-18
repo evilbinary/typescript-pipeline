@@ -71,8 +71,10 @@ export class OObject {
       console.log('-->format=>', format);
       if (toObject) {
         console.log('==>', JSON.parse(format));
+        return JSON.parse(format);
+      }else{
+        return format;
       }
-      return JSON.parse(format);
     } catch (e) {
       return format;
     }

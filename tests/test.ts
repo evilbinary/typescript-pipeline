@@ -19,7 +19,7 @@ const data = { a: { c: 'ccccc' }, b: 'bbbbbbb', c: '{c.a}', ee: {a:'aaaaaaaa=>'}
 // |pick:a|test:b,c,d
 // const exp = '{"a":"{.}","b":"{.}"}';
 // const exp = '{"a":{a} }';
-// const exp = '{"body":{"first":{a},"second":{b},"third":{.|pick:ee}}}';
-const exp = 'a={.|pick:ee}';
+const exp = '{"body":{"first":{a},"second":{b},"third":{.|pick:ee|string}}}';
+// const exp = '{.|string}';
 const ret = OObject.Format(exp, data,true);
 console.log('>>>>>>>>>>>', ret, ' =>', typeof ret);
