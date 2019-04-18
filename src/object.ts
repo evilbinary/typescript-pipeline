@@ -22,8 +22,9 @@ export class OObject {
   }
 
   private static getMatches(string, regex) {
-    var matches = [];
-    var match;
+    const matches = [];
+    let match = null;
+// tslint:disable-next-line: no-conditional-assignment
     while ((match = regex.exec(string))) {
       matches.push(match);
     }
