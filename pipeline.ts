@@ -1,6 +1,6 @@
 import * as pick from 'object.pick';
 import * as omit from 'object.omit';
-import { deepMerge } from './other';
+import { deepMerge, deepGet } from './other';
 
 const pickData = (data, col) => {
   if (data instanceof Array) {
@@ -56,7 +56,7 @@ const value = (record, args, data) => {
       return Object.keys(obj).map(key => obj[key]);
     });
   } else {
-    let ret = Object.keys(record).map(key => record[key]);
+    const ret = Object.keys(record).map(key => record[key]);
     if (args.length > 0) {
       return pickData(ret, args);
     }
@@ -106,6 +106,37 @@ const last = (record, args, data) => {
   return record;
 };
 
+// function getGet(obj: any, path: string | string[], defaultValue?: any) {
+//   if (!obj || path == null || path.length === 0) return defaultValue;
+//   if (!Array.isArray(path)) {
+//     path = ~path.indexOf('.') ? path.split('.') : [path];
+//   }
+//   if (Array.isArray(obj)) {
+//     console.log('is array path=>',path);
+//     return obj.map(e=>{
+//       console.log('ee=>',e, 'path=>',path);
+//       const ret= getGet(e,path,defaultValue);
+//       console.log('ret=>',ret);
+//     })
+//   } else {
+//     if (path.length === 1) {
+//       const checkObj = obj[path[0]];
+//       return typeof checkObj === 'undefined' ? defaultValue : checkObj;
+//     }
+//     return (
+//       path.reduce((o, k) => {
+//         console.log('o=>', o, 'k=>', k);
+//         return (o || {})[k], obj;
+//       }) || defaultValue
+//     );
+//   }
+// }
+
+// const get = (record, args, data) => {
+//   console.log('args=>', args);
+//   return getGet(record, args[0], data);
+// };
+
 const toObj = (ks, vs) =>
   ks.reduce((o, k, i) => {
     o[k] = vs[i];
@@ -117,6 +148,9 @@ const object = (record, args, data) => {
     return toObj(args, record);
   }
   return record;
+};
+const string = (record, args, data) => {
+  return JSON.stringify(object(record,args,data));
 };
 
 const fpipe = {
@@ -130,8 +164,10 @@ const fpipe = {
   value: value,
   nth: nth,
   object: object,
+  string: string,
   last: last,
-  first: first
+  first: first,
+  // get: get
 };
 // const exp = 'pick:XM,GH';
 export const processPipe = (record, exp, data?) => {
@@ -140,7 +176,7 @@ export const processPipe = (record, exp, data?) => {
   funs.forEach(e => {
     const ee = e.split(':');
     const fname = ee[0];
-    let args = {};
+    let args = [];
     if (ee[1]) {
       args = ee[1].split(',');
     }
