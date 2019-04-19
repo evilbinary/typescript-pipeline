@@ -105,6 +105,13 @@ const last = (record, args, data) => {
   }
   return record;
 };
+const decode = (record, args, data) => {
+  return Buffer.from(JSON.stringify(record)).toString(args[0]);
+};
+
+const base64 = (record, args, data) => {
+  return decode(record,'base64',data);
+};
 
 // function getGet(obj: any, path: string | string[], defaultValue?: any) {
 //   if (!obj || path == null || path.length === 0) return defaultValue;
@@ -150,7 +157,7 @@ const object = (record, args, data) => {
   return record;
 };
 const string = (record, args, data) => {
-  return JSON.stringify(object(record,args,data));
+  return JSON.stringify(object(record, args, data));
 };
 
 const fpipe = {
@@ -167,6 +174,8 @@ const fpipe = {
   string: string,
   last: last,
   first: first,
+  decode: decode,
+  base64: base64
   // get: get
 };
 // const exp = 'pick:XM,GH';

@@ -19,6 +19,7 @@ export class Fruit {
 
 export const multiData = [
   {
+    gaga:12341234,
     SFZJYXQ: '',
     IDCARD: '34234234',
     DH: '',

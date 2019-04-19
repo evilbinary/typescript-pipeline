@@ -13,8 +13,6 @@ export class OObject {
   ): string {
     try {
       return OObject.format(regexObject, format, args, toObject);
-
-      return format;
     } catch (e) {
       console.log(e);
       return OObject.empty;
@@ -24,7 +22,7 @@ export class OObject {
   private static getMatches(string, regex) {
     const matches = [];
     let match = null;
-// tslint:disable-next-line: no-conditional-assignment
+    // tslint:disable-next-line: no-conditional-assignment
     while ((match = regex.exec(string))) {
       matches.push(match);
     }
@@ -57,7 +55,11 @@ export class OObject {
     });
     try {
       matches.forEach((m, i) => {
-        format = format.replace(m[0], JSON.stringify(mret[i]));
+        if (typeof mret[i] === 'string' || typeof mret[i] === 'number') {
+          format = format.replace(m[0], mret[i]);
+        } else {
+          format = format.replace(m[0], JSON.stringify(mret[i]));
+        }
       });
       if (toObject) {
         return JSON.parse(format);

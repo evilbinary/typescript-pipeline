@@ -15,6 +15,7 @@
   "dependencies": {
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",
+    "@types/node": "^11.13.5",
     "chai": "^4.2.0",
     "extend": "^3.0.2",
     "mocha": "^6.1.2",
