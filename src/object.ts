@@ -51,7 +51,7 @@ export class OObject {
         return pret;
       });
       return result;
-      //args.reduce(()=>);
+      // args.reduce(()=>);
     });
     try {
       matches.forEach((m, i) => {

@@ -19,7 +19,7 @@ describe('test pipe', () => {
 const munipulate = (exp, data, expectValue?) => {
   const result = OObject.Format(exp, data, true);
   if (expectValue) {
-    expect(result).to.deep.equal(expectValue);
+    expect(result).to.deep.equals(expectValue);
   }
   return result;
 };
@@ -45,6 +45,59 @@ describe('test json manipulate', () => {
         ee: { a: 'aaaaaaaa' }
       },
       '{a:{"c":"ccccc"}},b:{"c":"ccccc"}}'
+    );
+  });
+  it('should be string', () => {
+    munipulate(
+      '{pathConfig.linkPath}/api/user/delete/{objectId},{gaga}',
+      multiData[0],
+      'pathConfig.linkPath/api/user/delete/5cac093d587bfc276cf9dbc0,12341234'
+    );
+  });
+
+  it('test omit', () => {
+    munipulate(
+      'hello={ee|omit:a},gaga={a}',
+      JSON.parse(
+        '{"a":{"c":"ccccc"},"b":"bbbbbbb","c":"{c.a}","ee":{"a":"aaaaaaaa","b":"bbbbbbb","cccc":"ccccc"}}'
+      ),
+      'hello={"b":"bbbbbbb","cccc":"ccccc"},gaga={"c":"ccccc"}'
+    );
+  });
+
+  it('test omit', () => {
+    munipulate(
+      'hello={ee|omit:a},gaga={a}',
+      JSON.parse(
+        '{"a":{"c":"ccccc"},"b":"bbbbbbb","c":"{c.a}","ee":{"a":"aaaaaaaa","b":"bbbbbbb","cccc":"ccccc"}}'
+      ),
+      'hello={"b":"bbbbbbb","cccc":"ccccc"},gaga={"c":"ccccc"}'
+    );
+  });
+
+  it('test .', () => {
+    munipulate(
+      '{"a":{.},"b":{.}}',
+      {
+        a: { c: 'ccccc' },
+        b: 'bbbbbbb',
+        c: '{c.a}',
+        ee: { a: 'aaaaaaaa' }
+      },
+      {
+        a: {
+          a: { c: 'ccccc' },
+          b: 'bbbbbbb',
+          c: '{c.a}',
+          ee: { a: 'aaaaaaaa' }
+        },
+        b: {
+          a: { c: 'ccccc' },
+          b: 'bbbbbbb',
+          c: '{c.a}',
+          ee: { a: 'aaaaaaaa' }
+        }
+      }
     );
   });
 });
