@@ -15,24 +15,24 @@ import { OObject } from '../src/object';
 
 
 // const data = [{ a: { c: 'oooo' } }, { b: 'bbbbbbb' }, { c: '{c.a}', d: 'ddd' },{ a: 'ccc' }];
-const data = {
-  a: { c: 'ccccc' },
-  b: 'bbbbbbb',
-  c: '{c.a}',
-  ee: { a: 'aaaaaaaa' }
-};
-// const data = JSON.parse(
-//   '{"a":{"c":"ccccc"},"b":"bbbbbbb","c":"{c.a}","ee":{"a":"aaaaaaaa","b":"bbbbbbb","cccc":"ccccc"}}'
-// );
+// const data = {
+//   a: { c: 'ccccc' },
+//   b: 'bbbbbbb',
+//   c: '{c.a}',
+//   ee: { a: 'aaaaaaaa' }
+// };
+const data = JSON.parse(
+  '{"a":{"c":"ccccc"},"b":"bbbbbbb","c":"{c.a}","ee":{"a":"aaaaaaaa","b":"bbbbbbb","cccc":"ccccc"}}'
+);
 // const exp='{a:{a}},b:{a}}';
 // |pick:a|test:b,c,d
-const exp = '{"a":{.},"b":{.}}';
+// const exp = '{"a":{.},"b":{.}}';
 // const exp = '{"a":{a} }';
 // const exp = '{"body":{"first":{a},"second":{b},"third":{.|pick:ee|string}}}';
 // const exp = '{.|string}';
 // const exp = '{"test":{a}}';
 // const exp = '{ee|omit:a}';
-// const exp = 'hello={ee|omit:a},gaga={a}';
+const exp = 'hello="{ee|omit:a|base64}",gaga={a|base64}';
 
 // const data=multiData[0];
 // const exp="{pathConfig.linkPath}/api/user/delete/{objectId},{gaga}";

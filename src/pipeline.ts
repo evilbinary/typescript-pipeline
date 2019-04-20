@@ -106,11 +106,12 @@ const last = (record, args, data) => {
   return record;
 };
 const decode = (record, args, data) => {
-  return Buffer.from(JSON.stringify(record)).toString(args[0]);
+  const coder = args instanceof Array ? args[0] : args;
+  return Buffer.from(JSON.stringify(record)).toString(args);
 };
 
 const base64 = (record, args, data) => {
-  return decode(record,'base64',data);
+  return decode(record, 'base64', data);
 };
 
 // function getGet(obj: any, path: string | string[], defaultValue?: any) {

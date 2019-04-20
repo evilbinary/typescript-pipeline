@@ -65,16 +65,6 @@ describe('test json manipulate', () => {
     );
   });
 
-  it('test omit', () => {
-    munipulate(
-      'hello={ee|omit:a},gaga={a}',
-      JSON.parse(
-        '{"a":{"c":"ccccc"},"b":"bbbbbbb","c":"{c.a}","ee":{"a":"aaaaaaaa","b":"bbbbbbb","cccc":"ccccc"}}'
-      ),
-      'hello={"b":"bbbbbbb","cccc":"ccccc"},gaga={"c":"ccccc"}'
-    );
-  });
-
   it('test .', () => {
     munipulate(
       '{"a":{.},"b":{.}}',
@@ -98,6 +88,16 @@ describe('test json manipulate', () => {
           ee: { a: 'aaaaaaaa' }
         }
       }
+    );
+  });
+
+  it('test base64', () => {
+    munipulate(
+      'hello="{ee|omit:a|base64}",gaga={a|base64}',
+      JSON.parse(
+        '{"a":{"c":"ccccc"},"b":"bbbbbbb","c":"{c.a}","ee":{"a":"aaaaaaaa","b":"bbbbbbb","cccc":"ccccc"}}'
+      ),
+      'hello="eyJiIjoiYmJiYmJiYiIsImNjY2MiOiJjY2NjYyJ9",gaga=eyJjIjoiY2NjY2MifQ=='
     );
   });
 });
