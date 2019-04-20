@@ -107,7 +107,7 @@ const last = (record, args, data) => {
 };
 const decode = (record, args, data) => {
   const coder = args instanceof Array ? args[0] : args;
-  return Buffer.from(JSON.stringify(record)).toString(args);
+  return Buffer.from(JSON.stringify(record)).toString(coder);
 };
 
 const base64 = (record, args, data) => {

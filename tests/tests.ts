@@ -100,4 +100,12 @@ describe('test json manipulate', () => {
       'hello="eyJiIjoiYmJiYmJiYiIsImNjY2MiOiJjY2NjYyJ9",gaga=eyJjIjoiY2NjY2MifQ=='
     );
   });
+
+  it('test html', () => {
+    munipulate(
+      '<html><head></head><div>编号：{IDCARD}</div><div>性别：{XB}</div></head><body><body></html>',
+      multiData[0],
+      '<html><head></head><div>编号：34234234</div><div>性别：男性</div></head><body><body></html>'
+    );
+  });
 });

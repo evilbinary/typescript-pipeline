@@ -13,7 +13,6 @@ import { OObject } from '../src/object';
 // var arr = Object.keys(obj).map(key => obj[key]);
 // console.log(arr);
 
-
 // const data = [{ a: { c: 'oooo' } }, { b: 'bbbbbbb' }, { c: '{c.a}', d: 'ddd' },{ a: 'ccc' }];
 // const data = {
 //   a: { c: 'ccccc' },
@@ -21,9 +20,9 @@ import { OObject } from '../src/object';
 //   c: '{c.a}',
 //   ee: { a: 'aaaaaaaa' }
 // };
-const data = JSON.parse(
-  '{"a":{"c":"ccccc"},"b":"bbbbbbb","c":"{c.a}","ee":{"a":"aaaaaaaa","b":"bbbbbbb","cccc":"ccccc"}}'
-);
+// const data = JSON.parse(
+//   '{"a":{"c":"ccccc"},"b":"bbbbbbb","c":"{c.a}","ee":{"a":"aaaaaaaa","b":"bbbbbbb","cccc":"ccccc"}}'
+// );
 // const exp='{a:{a}},b:{a}}';
 // |pick:a|test:b,c,d
 // const exp = '{"a":{.},"b":{.}}';
@@ -32,10 +31,17 @@ const data = JSON.parse(
 // const exp = '{.|string}';
 // const exp = '{"test":{a}}';
 // const exp = '{ee|omit:a}';
-const exp = 'hello="{ee|omit:a|base64}",gaga={a|base64}';
-
 // const data=multiData[0];
 // const exp="{pathConfig.linkPath}/api/user/delete/{objectId},{gaga}";
+// const exp = 'hello="{ee|omit:a|base64}",gaga={a|base64}';
+const exp =
+  '<html><head></head>\
+<div>编号：{IDCARD}</div>\
+<div>性别：{XB}</div>\
+</head>\
+<body>\
+<body></html>';
+const data = multiData[0];
 
 const result = OObject.Format(exp, data, true);
 console.log('data:', data);
