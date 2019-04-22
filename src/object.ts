@@ -51,12 +51,12 @@ export class OObject {
       });
       // console.log(' retExp:', retExp);
       let result = null;
-      if (retExp.length != 1) {
+      if (retExp.length !== 1) {
         result = retExp.reduce((p, k, index) => {
           let pret = null;
-          console.log('   p=', p, 'k=', k, 'index=', index);
+          // console.log('   p=', p, 'k=', k, 'index=', index);
           pret = processPipe(p, k, p);
-          console.log('   return=>', pret);
+          // console.log('   return=>', pret);
           if (p === exp[index - 1]) {
             return null;
           }

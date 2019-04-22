@@ -191,17 +191,16 @@ export const processPipe = (record, exp, data?) => {
       args = ee[1].split(',');
     }
     if (fpipe[fname]) {
-      console.log('fname:', fname, args, data);
+      // console.log('fname:', fname, args, data);
       ret = fpipe[fname](ret, args, data);
-      console.log('ret:', ret);
+      // console.log('ret:', ret);
     }
   });
   return ret;
 };
 export const pipeApply = (fname, args, data) => {
   let ret = null;
-  console.log('fname:', fname, args, data);
-
+  // console.log('fname:', fname, args, data);
   if (fpipe[fname]) {
     ret = fpipe[fname](data, args, data);
   }
