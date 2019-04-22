@@ -80,6 +80,27 @@ describe('test json manipulate', () => {
     );
   });
 
+  it('multi exp2 ', () => {
+    const data = multiData[0];
+    const exp =
+      '{pathConfig.linkPath|obj}/api/user/delete/{objectId},{gaga},{pathConfig.linkPath}';
+    const data2 = {
+      pathConfig: {
+        linkPath: 'hello'
+      }
+    };
+    const data3 = {
+      pathConfig: {
+        linkPath: 'hello'
+      }
+    };
+    const test = OObject.Format(exp, data, true);
+    let result = OObject.Format(test, data2, true);
+    expect(result).to.deep.equals(
+      'hello/api/user/delete/5cac093d587bfc276cf9dbc0,12341234,hello'
+    );
+  });
+
   it('test omit', () => {
     munipulate(
       'hello={ee|omit:a},gaga={a}',

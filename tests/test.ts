@@ -31,17 +31,27 @@ import { OObject } from '../src/object';
 // const exp = '{.|string}';
 // const exp = '{"test":{a}}';
 // const exp = '{ee|omit:a}';
+
 const data = multiData[0];
-const exp = '{pathConfig.linkPath}/api/user/delete/{objectId},{gaga}';
-// const exp = 'hello="{ee|omit:a|base64}",gaga={a|base64}';;
+const exp ='{pathConfig.linkPath|obj}/api/user/delete/{objectId},{gaga},{pathConfig.linkPath}';
+// const exp = 'hello="{ee|omit:a|base64}",gaga={a|base64}';
 const data2 = {
   pathConfig: {
-    // linkPath: 'hello'
+    linkPath: 'hello'
   }
 };
+console.log('#exp:', exp);
 const test = OObject.Format(exp, data, true);
+console.log('#exp test:', test);
 const result = OObject.Format(test, data2, true);
-console.log('exp:', exp);
-console.log('exp test:', result);
 // console.log('data:', data);
-console.log('result:', result, ' =>', typeof result);
+console.log('#result:', result, ' =>', typeof result);
+
+/*
+const exp = 'hello={ee|omit:a},gaga={a}';
+const data = JSON.parse(
+  '{"a":{"c":"ccccc"},"b":"bbbbbbb","c":"{c.a}","ee":{"a":"aaaaaaaa","b":"bbbbbbb","cccc":"ccccc"}}'
+);
+const result = OObject.Format(exp, data, true);
+console.log('#result:', result, ' =>', typeof result);
+*/

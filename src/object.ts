@@ -1,5 +1,5 @@
 import { deepGet } from './other';
-import { processPipe } from './pipeline';
+import { processPipe, pipeApply } from './pipeline';
 
 const regexObject = /{([\w|\.|\\|:|,]*)}/g;
 
@@ -35,30 +35,38 @@ export class OObject {
     arg: any,
     toObject: boolean = false
   ): any {
-    const matches = OObject.getMatches(format, regexObject);
+    // console.log('format', format);
+    const matches = OObject.getMatches(format, regex);
+    // console.log('matches=>', matches);
     const mret = matches.map(o => {
+      // console.log('\n$$$$$$$$$$exp==>:', o[1]);
+
       const exp = o[1].split('|');
-      // console.log('exp==>:', o[0]);
       const retExp = exp.map(obj => {
         if (obj === '.') {
           return arg;
         }
-        // console.log('obj=>', '{' + obj + '}');
+        // console.log(' obj=>', obj);
         return deepGet(arg, obj, obj);
       });
-      // console.log('retExp:', retExp);
+      // console.log(' retExp:', retExp);
       let result = null;
       if (retExp.length != 1) {
-        result = retExp.reduce((p, k) => {
-          // console.log('p=', p, 'k=', k);
-          const pret = processPipe(p, k);
-          // console.log('   return=>', pret);
+        result = retExp.reduce((p, k, index) => {
+          let pret = null;
+          console.log('   p=', p, 'k=', k, 'index=', index);
+          pret = processPipe(p, k, p);
+          console.log('   return=>', pret);
+          if (p === exp[index - 1]) {
+            return null;
+          }
           return pret;
         });
-        if (result == null || result == {} || Object.keys(result).length == 0) {
-          // console.log('result is null');
+        // console.log('result is ', result);
+        if (result === null || result === {}) {
           return o[0];
         }
+        return result;
       } else {
         // console.log('o[0]', o[1], ' retExp[0]', retExp[0]);
         result = o[1] === retExp[0] ? o[0] : retExp[0];
