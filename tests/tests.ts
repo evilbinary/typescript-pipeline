@@ -47,11 +47,36 @@ describe('test json manipulate', () => {
       '{a:{"c":"ccccc"}},b:{"c":"ccccc"}}'
     );
   });
+
   it('should be string', () => {
     munipulate(
       '{pathConfig.linkPath}/api/user/delete/{objectId},{gaga}',
       multiData[0],
-      'pathConfig.linkPath/api/user/delete/5cac093d587bfc276cf9dbc0,12341234'
+      '{pathConfig.linkPath}/api/user/delete/5cac093d587bfc276cf9dbc0,12341234'
+    );
+  });
+
+  it('multi exp ', () => {
+    const data = multiData[0];
+    const exp = '{pathConfig.linkPath}/api/user/delete/{objectId},{gaga}';
+    const data2 = {
+      pathConfig: {
+        // linkPath: 'hello'
+      }
+    };
+    const data3 = {
+      pathConfig: {
+        linkPath: 'hello'
+      }
+    };
+    const test = OObject.Format(exp, data, true);
+    let result = OObject.Format(test, data2, true);
+    expect(result).to.deep.equals(
+      '{pathConfig.linkPath}/api/user/delete/5cac093d587bfc276cf9dbc0,12341234'
+    );
+    result = OObject.Format(result, data3, true);
+    expect(result).to.deep.equals(
+      'hello/api/user/delete/5cac093d587bfc276cf9dbc0,12341234'
     );
   });
 
@@ -103,9 +128,9 @@ describe('test json manipulate', () => {
 
   it('test html', () => {
     munipulate(
-      '<html><head></head><div>编号：{IDCARD}</div><div>性别：{XB}</div></head><body><body></html>',
+      '<html><head></head><body><div>编号：{IDCARD}</div><div>性别：{XB}</div></head><body></html>',
       multiData[0],
-      '<html><head></head><div>编号：34234234</div><div>性别：男性</div></head><body><body></html>'
+      '<html><head></head><body><div>编号：34234234</div><div>性别：男性</div></head><body></html>'
     );
   });
 });

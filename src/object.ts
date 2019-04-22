@@ -38,18 +38,32 @@ export class OObject {
     const matches = OObject.getMatches(format, regexObject);
     const mret = matches.map(o => {
       const exp = o[1].split('|');
+      // console.log('exp==>:', o[0]);
       const retExp = exp.map(obj => {
         if (obj === '.') {
           return arg;
         }
+        // console.log('obj=>', '{' + obj + '}');
         return deepGet(arg, obj, obj);
       });
-      const result = retExp.reduce((p, k) => {
-        // console.log('p=', p, 'k=', k);
-        const pret = processPipe(p, k);
-        // console.log('   return=>', pret);
-        return pret;
-      });
+      // console.log('retExp:', retExp);
+      let result = null;
+      if (retExp.length != 1) {
+        result = retExp.reduce((p, k) => {
+          // console.log('p=', p, 'k=', k);
+          const pret = processPipe(p, k);
+          // console.log('   return=>', pret);
+          return pret;
+        });
+        if (result == null || result == {} || Object.keys(result).length == 0) {
+          // console.log('result is null');
+          return o[0];
+        }
+      } else {
+        // console.log('o[0]', o[1], ' retExp[0]', retExp[0]);
+        result = o[1] === retExp[0] ? o[0] : retExp[0];
+      }
+      // console.log('result:', result);
       return result;
       // args.reduce(()=>);
     });

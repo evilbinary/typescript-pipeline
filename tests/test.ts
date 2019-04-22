@@ -31,19 +31,17 @@ import { OObject } from '../src/object';
 // const exp = '{.|string}';
 // const exp = '{"test":{a}}';
 // const exp = '{ee|omit:a}';
-// const data=multiData[0];
-// const exp="{pathConfig.linkPath}/api/user/delete/{objectId},{gaga}";
-// const exp = 'hello="{ee|omit:a|base64}",gaga={a|base64}';
-const exp =
-  '<html><head></head>\
-<div>编号：{IDCARD}</div>\
-<div>性别：{XB}</div>\
-</head>\
-<body>\
-<body></html>';
 const data = multiData[0];
-
-const result = OObject.Format(exp, data, true);
-console.log('data:', data);
+const exp = '{pathConfig.linkPath}/api/user/delete/{objectId},{gaga}';
+// const exp = 'hello="{ee|omit:a|base64}",gaga={a|base64}';;
+const data2 = {
+  pathConfig: {
+    // linkPath: 'hello'
+  }
+};
+const test = OObject.Format(exp, data, true);
+const result = OObject.Format(test, data2, true);
 console.log('exp:', exp);
+console.log('exp test:', result);
+// console.log('data:', data);
 console.log('result:', result, ' =>', typeof result);
