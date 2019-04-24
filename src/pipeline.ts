@@ -165,7 +165,7 @@ const objToUrl = (record, args, data) => {
   const arr = [];
   for (const i in record) {
     if (record.hasOwnProperty(i)) {
-      if (args.length > 0 && args[0] == 'noEncode') {
+      if (args.length > 0 && args[0] === 'noEncode') {
         arr.push(i + '=' + record[i]);
       } else {
         arr.push(encodeURIComponent(i) + '=' + encodeURIComponent(record[i]));
