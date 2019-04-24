@@ -32,6 +32,7 @@ import { OObject } from '../src/object';
 // const exp = '{"test":{a}}';
 // const exp = '{ee|omit:a}';
 
+/*
 const data = multiData[0];
 const exp ='{pathConfig.linkPath|obj}/api/user/delete/{objectId},{gaga},{pathConfig.linkPath}';
 // const exp = 'hello="{ee|omit:a|base64}",gaga={a|base64}';
@@ -46,6 +47,7 @@ console.log('#exp test:', test);
 const result = OObject.Format(test, data2, true);
 // console.log('data:', data);
 console.log('#result:', result, ' =>', typeof result);
+*/
 
 /*
 const exp = 'hello={ee|omit:a},gaga={a}';
@@ -55,3 +57,11 @@ const data = JSON.parse(
 const result = OObject.Format(exp, data, true);
 console.log('#result:', result, ' =>', typeof result);
 */
+
+
+const exp = 'hello={""},gaga={a},test={$b},test={_b},toUrl=>{ee|toUrl:noEncode}';
+const data = JSON.parse(
+  '{"a":{"c":"ccccc"},"_b":"_b_b_","$b":"bbbbbbb","c":"{c.a}","ee":{"a":"aaaaaaaa","b":"bbbbbbb","cccc":"哈哈"}}'
+);
+const result = OObject.Format(exp, data, true);
+console.log('#result:', result, ' =>', typeof result);

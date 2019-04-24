@@ -161,6 +161,32 @@ const string = (record, args, data) => {
   return JSON.stringify(object(record, args, data));
 };
 
+const objToUrl = (record, args, data) => {
+  const arr = [];
+  for (const i in record) {
+    if (record.hasOwnProperty(i)) {
+      if (args.length > 0 && args[0] == 'noEncode') {
+        arr.push(i + '=' + record[i]);
+      } else {
+        arr.push(encodeURIComponent(i) + '=' + encodeURIComponent(record[i]));
+      }
+    }
+  }
+  return arr.join('&');
+};
+
+const urlToObj = (record, args, data) => {
+  const strings = record.split('&');
+  const res = {};
+  for (let i = 0; i < strings.length; i++) {
+    const str = strings[i].split('=');
+    if (str[0] !== '') {
+      res[str[0]] = str[1];
+    }
+  }
+  return res;
+};
+
 const fpipe = {
   pick: pickData,
   omit: omitData,
@@ -176,7 +202,9 @@ const fpipe = {
   last: last,
   first: first,
   decode: decode,
-  base64: base64
+  base64: base64,
+  toUrl: objToUrl,
+  urlToObj: urlToObj
   // get: get
 };
 // const exp = 'pick:XM,GH';

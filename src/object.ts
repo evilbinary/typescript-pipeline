@@ -1,7 +1,7 @@
 import { deepGet } from './other';
 import { processPipe, pipeApply } from './pipeline';
 
-const regexObject = /{([\w|\.|\\|:|,]*)}/g;
+const regexObject = /{([\w|\.|$|#|\\|:|,]*)}/g;
 
 export class OObject {
   public static empty: any = null;
