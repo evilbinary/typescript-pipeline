@@ -122,6 +122,9 @@ typescript-pipeline
 结果:
      a=a1&b=a2&c=a3
 ```
+
+### 应用例子
+
 #### 生成任意字符模版
 
 ```json
@@ -132,8 +135,49 @@ typescript-pipeline
 结果:
     <html><head></head><body><div>编号：34234234</div><div>性别：男性</div></head><body></html>
 ```
+#### api接口转换
 
-# Todo
+```json
+输入：
+/* 接口返回数据 */
+{
+    "status": 2200, // 很多不同的接口的状态码
+    "error_msg": "OK",
+    "data": { // 接口返回的实用数据
+        "some field": "",
+        // some other data ...
+    },
+    "extra_info": {},
+}
+转换表达式：
+{
+  "status": "{status}",
+  "data": "{data}",
+  "message": "{error_msg}"
+}
+输出：
+{
+  "status": 2200,
+  "data": {
+    "some field": "",
+        // some other data ...
+  },
+  "message": "OK"
+}
+```
+
+#### 数据库查询操作
+```json
+输入：
+    {"a":"a1","b":"a2","c":"a3"}
+表达式：
+    {.|pick:a}
+输出：
+    {"a":"a1",}
+```
+
+
+### Todo
 #### 数组标识符
 1. 索引 `.[2]` 
 2. 切片 `.[10:15]` 
